@@ -1,9 +1,16 @@
-SELECT
-a.trainerid,
-a.starttime,
-a.endtime
-FROM TableA a
-INNER JOIN TableA b ON a.trainerid = b.trainerid AND a.starttime != b.starttime
-WHERE a.starttime <= b.endtime
-OR b.endtime >= a.starttime
-ORDER BY a.trainer_id, a.starttime
+SELECT DISTINCT
+    currentClass.trainerid,
+    currentClass.starttime,
+    currentClass.endtime
+FROM 
+    TableA AS currentClass
+    INNER JOIN TableA AS compaisonClass 
+        ON currentClass.trainerid = compaisonClass.trainerid 
+        AND currentClass.starttime != compaisonClass.starttime
+WHERE 
+    currentClass.starttime < compaisonClass.endtime
+    AND compaisonClass.endtime >= currentClass.starttime
+
+ORDER BY 
+    currentClass.trainer_id, 
+    currentClass.starttime;
